@@ -44,10 +44,11 @@ pub struct Purchase<'info> {
     )]
     listing: Account<'info, Listing>,
     #[account(
+        mut,
         seeds = [b"treasury", marketplace.key().as_ref()],
         bump = marketplace.treasury_bump,
     )]
-    treasury: InterfaceAccount<'info, TokenAccount>,
+    treasury: SystemAccount<'info>,
     associated_token_program: Program<'info, AssociatedToken>,
     system_program: Program<'info, System>,
     token_program: Interface<'info, TokenInterface>,

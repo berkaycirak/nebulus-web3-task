@@ -153,6 +153,7 @@ describe('marketplace', () => {
 			})
 			.rpc();
 		console.log('Marketplace Initialized. Tx:', tx);
+		console.log('Treasury------', treasury);
 	});
 
 	it('Listing!', async () => {
@@ -181,48 +182,49 @@ describe('marketplace', () => {
 		console.log('Your transaction signature', tx);
 	});
 
-	it('Delisting!', async () => {
+	// it('Delisting!', async () => {
+	// 	// Add your test here.
+	// 	const tx = await program.methods
+	// 		.delist()
+	// 		.accountsPartial({
+	// 			maker: maker.publicKey,
+	// 			marketplace,
+	// 			makerMint: nftMint.publicKey,
+	// 			makerAta,
+	// 			listing,
+	// 			vault,
+	// 			systemProgram: anchor.web3.SystemProgram.programId,
+	// 			tokenProgram: TOKEN_PROGRAM_ID,
+	// 		})
+	// 		.signers([maker])
+	// 		.rpc();
+	// 	console.log('\nDelisting Initialized!');
+	// 	console.log('Your transaction signature', tx);
+	// });
+
+	it('Purchase Initialized!', async () => {
+		console.log('Taker---------->', taker.publicKey.toBase58());
+		console.log('Treasury in Purchase------', treasury.toBase58());
 		// Add your test here.
 		const tx = await program.methods
-			.delist()
+			.purchase()
 			.accountsPartial({
+				taker: taker.publicKey,
 				maker: maker.publicKey,
-				marketplace,
 				makerMint: nftMint.publicKey,
-				makerAta,
-				listing,
+				marketplace,
+				takerAta,
 				vault,
+				listing,
+				treasury,
 				systemProgram: anchor.web3.SystemProgram.programId,
 				tokenProgram: TOKEN_PROGRAM_ID,
 			})
-			.signers([maker])
+			.signers([taker])
 			.rpc();
-		console.log('\nDelisting Initialized!');
+		console.log('\nPurchase Initialized!');
 		console.log('Your transaction signature', tx);
 	});
-
-	// it("Purchase Initialized!", async () => {
-
-	//   // Add your test here.
-	//   const tx = await program.methods.purchase()
-	//   .accountsPartial({
-	//     taker: taker.publicKey,
-	//     maker: maker.publicKey,
-	//     makerMint: nftMint.publicKey,
-	//     marketplace,
-	//     takerAta,
-	//     vault,
-	//     rewardsMint,
-	//     listing,
-	//     treasury,
-	//     systemProgram: anchor.web3.SystemProgram.programId,
-	//     tokenProgram: TOKEN_PROGRAM_ID,
-	//   })
-	//   .signers([taker])
-	//   .rpc();
-	//   console.log("\nPurchase Initialized!");
-	//   console.log("Your transaction signature", tx);
-	// });
 });
 
 function sleep(ms: number) {
